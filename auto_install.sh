@@ -58,12 +58,15 @@ mkdir /mnt/fd
 chmod 770 /mnt/fd
 chown root:users /mnt/fd
 
+dpkg --install gridapp-config_0.1-1_i386.deb
 
 cp fdb.img /usr/local/ipop/
 sudo mount -t ext2 -o loop /usr/local/ipop/fdb.img /mnt/fd/
 
 sudo bash
 echo "/usr/local/ipop/fdb.img  /mnt/fd ext2    rw,loop 0       0" >> /etc/fstab
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAtm6sRRyw4hMTCMdcOJJu6UYmXuAr5RCwf/YhbfwG+Jiw3FFi2hlJwPWSEvFM7BjFL8SDz+lHqawpEuQCRCYbg+qchQ+fcPJsw057WEDUVBifuQt3i9fg1GLdN/8vAXPm0Nen+MEHMyV6peSU3IF5+D1qF4FwJzRRdHt0/zPy8BF+E9qyBDGQEILhx5RmcexMsXgj5iJ9xO3YrCcDyJI32komO5iuSPidraf1Sfl48caZUecQBxU9QU+IPApKa/NYhMkmWJ1wPmiJ/vAzjROY6/tYrAGDwYMRvCiDQg/3mPdQ8LJZdDBtXvRvpS2mD6igLcTfRX0Wr4k/p3jpqxBpqQ== griduser@localhost" >> /root/.ssh/authorized_keys
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAtm6sRRyw4hMTCMdcOJJu6UYmXuAr5RCwf/YhbfwG+Jiw3FFi2hlJwPWSEvFM7BjFL8SDz+lHqawpEuQCRCYbg+qchQ+fcPJsw057WEDUVBifuQt3i9fg1GLdN/8vAXPm0Nen+MEHMyV6peSU3IF5+D1qF4FwJzRRdHt0/zPy8BF+E9qyBDGQEILhx5RmcexMsXgj5iJ9xO3YrCcDyJI32komO5iuSPidraf1Sfl48caZUecQBxU9QU+IPApKa/NYhMkmWJ1wPmiJ/vAzjROY6/tYrAGDwYMRvCiDQg/3mPdQ8LJZdDBtXvRvpS2mD6igLcTfRX0Wr4k/p3jpqxBpqQ== griduser@localhost" >> /home/griduser/.ssh/authorized_keys
 exit
 
 
