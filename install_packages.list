@@ -1,0 +1,10 @@
+wget
+resolvconf
+x-window-system-core xterm wdm icewm menu
+iptables
+gcc mono-gmcs libmono-system-runtime2.0-cil
+libmono-posix2.0-cil
+nfs-kernel-server nfs-common portmap
+binutils
+cronolog
+
