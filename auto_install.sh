@@ -23,7 +23,7 @@ fi
 echo "deb http://us.archive.ubuntu.com/ubuntu/ jaunty-backports main restricted universe multiverse" >> /etc/apt/sources.list
 echo "deb-src http://us.archive.ubuntu.com/ubuntu/ jaunty-backports main restricted universe multiverse" >> /etc/apt/sources.list
 apt-get update
-apt-get upgrade
+apt-get upgrade -y
 
 for pkg in $(cat install_packages.list); do
 	echo; echo Processing package $pkg...
@@ -34,8 +34,9 @@ echo "Preparing to install Condor..."
 mkdir /opt/condor
 chown griduser:griduser -R /opt/condor/
 mkdir /tmp/condor
+chown griduser:griduser -R /tmp/condor/
 
-file  `ls | grep condor` | grep directory > temp_file
+file  `ls | grep condor` | grep compressed > temp_file
 CONDOR_TGZ=`cat temp_file |  awk 'BEGIN{FS=":"}; { print $1 }'`
 rm -f temp_file
 tar -xzf $CONDOR_TGZ
@@ -44,7 +45,7 @@ file  `ls | grep condor` | grep directory > temp_file
 CONDOR_DIR=`cat temp_file |  awk 'BEGIN{FS=":"}; { print $1 }'`
 rm -f temp_file
 cd $CONDOR_DIR
-./condor_install --prefix=/opt/condor --local-dir=/tmp/condor --type=execute,submit
+./condor_install --prefix=/opt/condor --local-dir=/tmp/condor --type=execute,submit --owner=griduser
 cd ..
 
 wget http://www.grid-appliance.org/files/packages/ipop.deb
@@ -61,12 +62,15 @@ chown root:users /mnt/fd
 dpkg --install gridapp-config_0.1-1_i386.deb
 
 cp fdb.img /usr/local/ipop/
-sudo mount -t ext2 -o loop /usr/local/ipop/fdb.img /mnt/fd/
+mount -t ext2 -o loop /usr/local/ipop/fdb.img /mnt/fd/
 
-sudo bash
+cp System.Runtime.Remoting.dll /usr/lib/mono/2.0/
+
+mkdir /root/.ssh/
 echo "/usr/local/ipop/fdb.img  /mnt/fd ext2    rw,loop 0       0" >> /etc/fstab
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAtm6sRRyw4hMTCMdcOJJu6UYmXuAr5RCwf/YhbfwG+Jiw3FFi2hlJwPWSEvFM7BjFL8SDz+lHqawpEuQCRCYbg+qchQ+fcPJsw057WEDUVBifuQt3i9fg1GLdN/8vAXPm0Nen+MEHMyV6peSU3IF5+D1qF4FwJzRRdHt0/zPy8BF+E9qyBDGQEILhx5RmcexMsXgj5iJ9xO3YrCcDyJI32komO5iuSPidraf1Sfl48caZUecQBxU9QU+IPApKa/NYhMkmWJ1wPmiJ/vAzjROY6/tYrAGDwYMRvCiDQg/3mPdQ8LJZdDBtXvRvpS2mD6igLcTfRX0Wr4k/p3jpqxBpqQ== griduser@localhost" >> /root/.ssh/authorized_keys
+mkdir /home/griduser/.ssh/
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAtm6sRRyw4hMTCMdcOJJu6UYmXuAr5RCwf/YhbfwG+Jiw3FFi2hlJwPWSEvFM7BjFL8SDz+lHqawpEuQCRCYbg+qchQ+fcPJsw057WEDUVBifuQt3i9fg1GLdN/8vAXPm0Nen+MEHMyV6peSU3IF5+D1qF4FwJzRRdHt0/zPy8BF+E9qyBDGQEILhx5RmcexMsXgj5iJ9xO3YrCcDyJI32komO5iuSPidraf1Sfl48caZUecQBxU9QU+IPApKa/NYhMkmWJ1wPmiJ/vAzjROY6/tYrAGDwYMRvCiDQg/3mPdQ8LJZdDBtXvRvpS2mD6igLcTfRX0Wr4k/p3jpqxBpqQ== griduser@localhost" >> /home/griduser/.ssh/authorized_keys
-exit
+chown griduser:griduser /home/griduser/ -R
 
 
