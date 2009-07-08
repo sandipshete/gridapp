@@ -48,9 +48,10 @@ cd $CONDOR_DIR
 ./condor_install --prefix=/opt/condor --local-dir=/tmp/condor --type=execute,submit --owner=griduser
 cd ..
 
-wget http://www.grid-appliance.org/files/packages/ipop.deb
-dpkg --install ipop.deb
-dpkg --install ipop.deb
+wget "http://www.acis.ufl.edu/~yonggang/packages/ipop_8.0-1ubuntu9.04_i386.deb"
+dpkg --install ipop_8.0-1ubuntu9.04_i386.deb
+
+dpkg --install gridapp-config_0.2-1_i386.deb 
 
 mkdir /etc/condor
 ln -s /usr/local/ipop/etc/condor_config /etc/condor/condor_config
@@ -58,8 +59,6 @@ chmod 777 /etc/condor/condor_config
 mkdir /mnt/fd
 chmod 770 /mnt/fd
 chown root:users /mnt/fd
-
-dpkg --install gridapp-config_0.1-1_i386.deb
 
 cp fdb.img /usr/local/ipop/
 mount -t ext2 -o loop /usr/local/ipop/fdb.img /mnt/fd/
