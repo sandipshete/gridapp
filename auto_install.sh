@@ -51,7 +51,9 @@ cd ..
 wget "http://www.acis.ufl.edu/~yonggang/packages/ipop_8.0-1ubuntu9.04_i386.deb"
 dpkg --install ipop_8.0-1ubuntu9.04_i386.deb
 
-dpkg --install gridapp-config_0.2-1_i386.deb 
+echo Y > yes
+dpkg --install --force-overwrite --force-conflicts gridapp-config_0.2-1_i386.deb < yes
+rm yes
 
 mkdir /etc/condor
 ln -s /usr/local/ipop/etc/condor_config /etc/condor/condor_config
